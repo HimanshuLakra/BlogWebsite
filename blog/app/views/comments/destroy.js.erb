@@ -1,0 +1,5 @@
+$("div#comment_<%= @comment.id %>").remove();
+
+<% if !@post.comments.present? %>
+	$('#posts_comment_box').innerHTML = "";
+<% end %>

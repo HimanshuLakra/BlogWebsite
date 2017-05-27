@@ -1,0 +1,35 @@
+<div class="card">
+	<div class = "card-block">
+		<% if post.picture.present? %>
+			<%= image_tag post.picture.image.url, height: 90,width: 200 %>
+		<%end  %>
+
+	    <div style="font-size: 20px; margin-top: 10px;">
+	    	<strong> <%= truncate(post.title,length: 50) %></strong>
+	    </div>
+	    <div style="font-size: 12px; color: #000000;"><%= "by #{post.name}"%></div>
+	    <div style="font-size: 15px; color: #424242;  ">
+	   		 <%= truncate(post.content,length: 80)%>
+	   	</div>
+	    
+	    <div style="overflow: hidden; margin-top: 5px;">
+	    	<div   style ="float: left;">
+		    	<div class= "btn btn-info">
+		    		<%= link_to 'Show', post %>
+		    	</div>
+	    	</div>
+	    	<div style="float:left; overflow: hidden;"> 
+	    		<% if user_signed_in? and current_user.id == post.user_id %>
+			    	<div class = "btn btn-info" >
+			    		<%= link_to 'Edit', edit_post_path(post) %>
+			    	</div>
+			    	<div style="float:left;">
+				    	<%= form_for(post,html: {method: :delete, style: "margin-bottom: 0rem;"},remote: true) do |f| %>
+				    		<%= f.submit "Destroy",class: "btn btn-info" %>
+				    	<% end %>
+				    </div>
+		    	<% end  %>
+		    </div>
+		</div>
+	</div>
+</div>

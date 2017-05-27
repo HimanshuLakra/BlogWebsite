@@ -1,0 +1,54 @@
+
+<div style = "margin-left: 100px; margin-right: 80px;" >
+
+	<div class = "title" style = " margin-top: 30px; font-size: 30px;">
+	  <strong><%= @post.title %></strong>
+	</div>
+
+	<div id ="author" style = " font-size: 18px;">
+	  <b>by:</b>
+	  <%= @post.name %>
+	</div>  
+
+	<% if @post.picture.present? %>
+		<div style="margin-left: 150px; margin-top: 50px;">
+			<%= image_tag @post.picture.image.url, height: 250,width: 700 %>
+		</div>
+	<%end  %>
+	
+
+	<div style ="font-size : 18px ; overflow: hidden; margin-top: 10px;">
+	  <%@post.tags.each do |tag|%>
+	  	<div class= "label label-success" style="line-height: 2;float: left; margin-left: 5px;"><%= "##{tag.name}" %></div>
+	  <% end %>
+	</div>
+
+	<p style ="font-size : 20px ;margin-top: 30px; ">
+	  <%= @post.content %>
+	</p>
+
+ 	<div id="divider" style =" margin-right: 50px;"></div>
+	
+
+	<div style=" margin-top: 30px;">
+		<h4>Add Comment</h4>
+			<%= form_for([@post,@new_comment],remote: true)  do |f| %>
+				<div class = "body">
+					<%= f.text_area :body,cols: "70",rows: "3",placeholder: "Write your view"%>
+				</div>
+				<div class = "button" style="margin-top: 20px;">
+					<%= f.submit "Submit",class: "btn btn-raised btn-primary"%>
+				</div>
+			<%end %>
+	</div>
+	
+ 	<div id="posts_comment_box">
+		<%= render @comments %>
+	</div>
+
+	<div style="margin-top: 30px; margin-bottom: 50px;">
+		<%= link_to 'Edit', edit_post_path(@post)%> |
+		<%= link_to 'Back', posts_path %>
+	</div>
+
+</div>

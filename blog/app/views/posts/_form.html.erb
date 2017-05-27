@@ -1,0 +1,45 @@
+<%= content_for :head do%>
+  <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+<% end %>
+
+<div style="margin-left: 100px; margin-right: 100px;">
+  <%= form_for @post,html: { :multipart => true } do |f| %>
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group" style=" margin-top: 30px;">
+      <%= f.label :title ,class: "bmd-label-floating"%><br />
+      <%= f.text_field :title,class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :content %><br />
+      <%= f.text_area :content , cols: "120",rows: "10",placeholder: "Whats in your mind"%>
+    </div>
+
+    <div class="form-group">
+      <%= f.fields_for :picture_attributes do |file|%>
+        <%= file.file_field :image %>
+      <% end %>
+    </div>
+
+    <div class="form-group" style="margin-top: 30px;">
+        <%= f.label "Choose Tags(Multiple)" %>
+        <%= f.select :tag_ids, @tag_options, { include_blank: false },{ :class => "form-control",style: "overflow-y: scroll;",:multiple => true}%>
+    </div>
+
+    <div class="actions" style="margin-top: 20px;">
+      <%= f.submit "Create Post", class: "btn btn-raised btn-primary"%>
+    </div>
+
+  <% end %>
+</div>

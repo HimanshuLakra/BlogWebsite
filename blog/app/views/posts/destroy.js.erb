@@ -1,0 +1,7 @@
+
+// find element id by specifying element and its id
+$("div#post_<%=@post.id %>").bind('ajax:success', function() {
+    $(this).remove();
+});
+
+

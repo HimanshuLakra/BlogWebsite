@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Blog</title>
+		<%= stylesheet_link_tag "application.scss" %>
+		<%= javascript_include_tag "application.js" %>
+		<link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+		<%= yield :head%>
+	</head>
+
+	<body style="background: #ffffff">
+
+		<nav class = "navbar"  style="background: #607D8B; height: 80px;">
+			<ul class = "nav navbar-nav" style="overflow: hidden;">
+				<div style="float:left;overflow: hidden; margin-top: 20px; margin-left: 10px;">
+					<div style="float: left;">
+						<img src="/assets/blog_icon.png" width = "30" height="30">
+					</div>
+					<div style=" font-size: 22px; float: left; margin-left: 10px; ">
+						<strong><%= link_to  "Blog.com",posts_path ,style: "color:#ffffff; text-decoration: none;"%></strong>
+					</div>
+				</div>
+				<div class = "navbar-form " style="float: left; margin-top: 15px; margin-left: 150px;">
+						<%= form_tag search_path, id: :search_form do %>
+							<%= text_field_tag :query,nil,placeholder:"Search",:class => "form-control col-md-12"%>
+							<%= submit_tag "Search" ,class: "btn btn-raised btn-primary"%>
+						<% end %>
+					</div>
+			</ul>
+			<ul class="nav navbar-nav pull-xs-right" >
+				<div style="overflow: hidden;">
+
+					
+
+					<div style="float: left; margin-right: 20px;margin-top: 15px;">
+						<div style="margin-left: 5px;"><%= link_to  ("Write a post"+ image_tag("ic_edit.png", width: 30,heigth: 30)).html_safe,new_post_path, style: "color: white;" %></div> 
+						<div style="height: 1px; background: white;"></div>
+					</div>
+
+					<div style="margin-top: 20px; margin-right: 10px;  float: left;">
+			   			<% if user_signed_in? %>
+			   				<div><%= link_to "Hey,#{current_user.email}",dashboard_path ,style: "color: #cfd8dc; text-decoration: none;"%> 
+			   					<%= link_to  "Logout", destroy_user_session_path , method: :delete ,
+			   					style: "color: white; text-decoration: none;"%>
+			   				</div>
+			   			<% else %>
+			   				<%= link_to  "Sign In", new_user_session_path ,style: "color: white;"%> 
+			   			<% end %>  
+				   	</div>
+
+				</div>
+			</ul>
+		</nav>
+
+		<% if notice.present? %>
+		<p class="alert alert-info" style="margin-right: 50px;margin-left: 50px;"><%= notice %></p>
+		<% end %>
+
+		<% if  alert.present?  %>
+	    <p class="alert alert-warning" style="margin-right: 50px;margin-left: 50px;"><%= alert %></p>
+	    <% end  %>
+		<%= yield %>
+
+	</body>
+
+</html>

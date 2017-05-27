@@ -1,0 +1,42 @@
+<div class="row">
+
+	<%# if user_signed_in? %>
+	<div class= "col-md-3" style="height: 100vh;">
+
+		<div style="margin-left: 40px;"> 
+	        <%= form_for :picture_attributes, :html => {:multipart => true}, :method => :post, url: upload_profile_pic_path do |f| %>
+
+	            <div style=" height: 150px; width: 150px; background: #B0BEC5; color: #455A64;">
+	               
+	                <% if current_user.picture.present? %>
+	               		<%= image_tag(@current_user.picture.image.url,width: 200 , height: 200) %>
+	               	<% else  %>
+	               	  <div class = "text-center" style=" font-size: 50px; padding-top: 30px;">
+	               	  	<%= current_user.email.at(0).capitalize %>
+	               	  </div>
+	                <% end %>
+
+	                 <%= f.file_field :image, :title => "Upload New" %>
+	                 <%= f.submit "Upload Profile Pic" , class: "btn btn-raised btn-primary",style: "margin-top: 10px;"%>
+	            </div>
+	        <% end %>
+		 </div>
+
+		<div style="margin-top: 120px; margin-left: 40px;"><%= current_user.email %></div>
+		
+	</div>
+
+
+	<div id = "post-div" class="col-md-9" >
+		<div><strong>My Posts</strong></div>
+		<div style="margin-top: 20px;">
+			<% @posts.each do |post| %>
+				<div class="col-md-4" id="post_<%=post.id%>">
+					<%= render template: "posts/_post" ,locals: {post: post}%>
+				</div>
+				<%#= render template: "posts/_post" ,collection: @posts %>
+			<% end %>
+		</div>
+	</div>
+	  	<%# end %>
+</div>

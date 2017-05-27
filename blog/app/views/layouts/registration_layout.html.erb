@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Blog</title>
+		<%= stylesheet_link_tag "application.scss" %>
+		<%= javascript_include_tag "application.js" %>
+		<%= yield :head%>
+	</head>
+
+	<body style="background: #fff;">
+
+		<div style = "overflow: hidden;">
+			<div style = "width: 50%; height: 1000px; background: #009688; float: left; color: #ffffff; font-size: 27px; text-align: center; padding-top: 280px;">
+				<%= image_tag "blog_icon.png" ,width: 70,heigth: 70 %> Blog.com
+			</div>
+			<div style = "float: left; margin-left: 50px; margin-top: 100px;">
+			<%= yield %>
+			</div>
+
+			<div style = "float: left; margin-left: 50px; margin-top: 10px;">
+				<% if notice.present? %>
+					<p class="alert alert-info"><%= notice %></p>
+				<% end %>
+
+				<% if  alert.present?  %>
+				    <p class="alert alert-warning"><%= alert %></p>
+			    <% end  %>
+		    </div>
+		</div>
+	</body>
+
+</html>
