@@ -1,5 +1,5 @@
 <div class="card">
-	<div class = "card-block">
+	<div class = "card-block" style="word-wrap: break-word;">
 		<% if post.picture.present? %>
 			<%= image_tag post.picture.image.url, height: 90,width: 200 %>
 		<%end  %>
@@ -7,9 +7,9 @@
 	    <div style="font-size: 20px; margin-top: 10px;">
 	    	<strong> <%= truncate(post.title,length: 50) %></strong>
 	    </div>
-	    <div style="font-size: 12px; color: #000000;"><%= "by #{post.name}"%></div>
+	    <div style="font-size: 12px; color: #000000;"><%= "by #{post.name.split("@")[0]}"%></div>
 	    <div style="font-size: 15px; color: #424242;  ">
-	   		 <%= truncate(post.content,length: 80)%>
+	   		 <%= truncate(sanitize(post.content,tags: []),length: 80) %>
 	   	</div>
 	    
 	    <div style="overflow: hidden; margin-top: 5px;">

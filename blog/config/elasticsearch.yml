@@ -42,6 +42,3 @@ network.host: 0.0.0.0
 script.inline: true
 script.indexed: true
 script.engine.groovy.file.search: true
-
-http.cors.enabled: true
-http.cors.allow-origin: "*"

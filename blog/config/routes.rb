@@ -2,11 +2,9 @@ Blog::Application.routes.draw do
  
 
 
-  devise_scope :user do 
-    get 'dashboard' ,to: "users/sessions#user_dashboard" 
-    put 'update_profile_pic' ,to: "users/sessions#update_user_image"
-    post 'upload_profile_pic',to: "users/sessions#upload_user_image"
-  end
+  # devise_scope :user do 
+   
+  # end
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -19,8 +17,15 @@ Blog::Application.routes.draw do
 
   get "hello/helloworld", as: 'hello_himanshu'
 
-  post "search", to: 'search#search_posts'
 
+  post "search", to: 'search#search_posts' 
+  get "search", to: 'search#index' 
+
+  get 'dashboard' ,to: "users#user_dashboard" 
+  put 'update_profile_pic' ,to: "users#update_user_image"
+  post 'upload_profile_pic',to: "users#upload_user_image"
+
+  get "comments/new_reply"
 
 
 

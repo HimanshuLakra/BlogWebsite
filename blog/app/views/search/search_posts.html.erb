@@ -1,6 +1,10 @@
 
-<% @posts.each do |post|%>
-  <div class="col-md-3" id="post_<%=post.id%>">
-	<%= render template: "/posts/_post",locals: {post: post} %>
-	</div>
+<% if @posts.nil? %>
+	<div style="margin-left: 50px;">Sorry no results found for <%= @query %></div>
+<% else %>
+	<% @posts.each do |post|%>
+	  <div class="col-md-3" id="post_<%=post.id%>">
+		<%= render template: "/posts/_post",locals: {post: post} %>
+	  </div>
+	<% end %>
 <% end %>

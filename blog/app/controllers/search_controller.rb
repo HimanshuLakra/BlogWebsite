@@ -1,7 +1,9 @@
 class SearchController < ApplicationController
 
+	
+	layout "search_layout" , only: [:index]
+
 	def search_posts
-		#binding.pry
 		unless params[:query].blank?
 		 @response = Tag.search params[:query]
 		 @posts = []
@@ -10,8 +12,13 @@ class SearchController < ApplicationController
 		 		@posts << post
 		 	end
 		  }
+
+		 @posts = @posts.uniq!
 		end
 
-		@posts = @posts.uniq!
+		@query = params[:query]
+	end
+
+	def index 
 	end
 end

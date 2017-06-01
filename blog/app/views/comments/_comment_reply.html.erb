@@ -28,35 +28,10 @@
 			<div id="seperator" class="divider"></div>
 			<div class= "text-center" style="overflow: hidden;">
 				<div style="float: left; font-size: 12px;"><%=  DateTime.parse(comment.created_at.to_s).strftime("%m/%d/%Y") %> </div>
-				<div style="float: left; margin-left: 10px;">
-				 <%= link_to "Reply",new_comment_reply_path %>
-				</div>
 			</div>
 		</div>
 	</div>
 		<br>
-		<!-- <div class = "panel panel-default">
-			<div class="panel-body">
-				<div>
-					<%#= comment.body %>
-				</div>
-
-				<div>
-					<%#= "by #{comment.user.email.split("@")[0] }" %>
-				</div>
-
-				<div style="font-size: 12px;">
-					<%#=  DateTime.parse(comment.created_at.to_s).strftime("%m/%d/%Y") %>
-				</div>
-				<p>
-				 	<%#if user_signed_in? and current_user.id == comment.user_id %>
-				  		<%#= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
-				 			<button type="submit" class="btn btn-raised btn-info">Destroy</button>
-				 		<%# end %>
-				  	<%# end %>
-				</p>
-			</div>
-		</div> -->
 	</div>
 <% end %>
 

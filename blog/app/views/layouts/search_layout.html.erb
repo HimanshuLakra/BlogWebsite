@@ -21,25 +21,19 @@
 						<strong><%= link_to  "Blog.com",posts_path ,style: "color:#ffffff; text-decoration: none;"%></strong>
 					</div>
 				</div>
-				<div class = "navbar-form " style="float: left; margin-top: 15px; margin-left: 150px;">
-						<%= form_tag search_path, id: :search_form do %>
-							<%= text_field_tag :query,nil,placeholder:"Search",:class => "form-control col-md-12"%>
-							<%= submit_tag "Search" ,id: "search_button" , class: "btn btn-raised btn-primary"%>
-						<% end %>
-					</div>
 			</ul>
 			<ul class="nav navbar-nav pull-xs-right" >
 				<div style="overflow: hidden;">
 					<div style="float: left; margin-right: 20px;margin-top: 15px;">
-						<div style="margin-left: 5px;"><%= link_to  ("Write a post"+ image_tag("ic_edit.png", width: 30,heigth: 30)).html_safe,new_post_path, style: "color: white; text-decoration: none;" %></div> 
+						<div style="margin-left: 5px;"><%= link_to  ("Write a post"+ image_tag("ic_edit.png", width: 30,heigth: 30)).html_safe,new_post_path, style: "color: white;" %></div> 
 						<div style="height: 1px; background: white;"></div>
 					</div>
 
 					<div style="margin-top: 20px; margin-right: 10px;  float: left;">
 			   			<% if user_signed_in? %>
-			   				<div><%= link_to "Hey, #{current_user.email.split("@")[0]}",dashboard_path ,style: "color: #cfd8dc; text-decoration: none;"%> 
+			   				<div><%= link_to "Hey,#{current_user.email}",dashboard_path ,style: "color: #cfd8dc; text-decoration: none;"%> 
 			   					<%= link_to  "Logout", destroy_user_session_path , method: :delete ,
-			   					style: "color: white; text-decoration: none; margin-left: 5px;"%>
+			   					style: "color: white; text-decoration: none;"%>
 			   				</div>
 			   			<% else %>
 			   				<%= link_to  "Sign In", new_user_session_path ,style: "color: white;"%> 
@@ -60,25 +54,4 @@
 		<%= yield %>
 
 	</body>
-
-	<script type="text/javascript">
-		if($('#query').val() ==  "") {
-		  $('#search_button').attr('disabled', true);
-		  // $('#search_button').setAttribute("class","btn btn-default");
-		}
-
-		$('#query').keyup(function(){
-		  if($('#query').val() !=  "") {
-		       $('#search_button').attr('disabled', false);
-		       // $('#search_button').setAttribute("class","btn btn-raised btn-primary");
-		  }
-
-		  else{
-		  	$('#search_button').attr('disabled', true); 
-		  	// $('#search_button').setAttribute("class","btn btn-default");
-		  }
-		      
-		});
-	</script>
-
 </html>

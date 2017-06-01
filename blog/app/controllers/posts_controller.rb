@@ -2,10 +2,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
 
-  before_filter :authenticate_user!, only: [:new, :user_dashboard]
+  before_filter :authenticate_user!, only: [:new,:edit,:update,:create,:destroy,:user_dashboard]
 
   def index
-    @posts = Post.all
+    @posts = Post.paginate(:page => params[:page],:per_page => 8)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
@@ -29,9 +30,7 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     @posts_tags = @post.posts_tags.build
-
-    @tags = Tag.all
-    @tag_options = @tags.collect {|tag| [tag.name, tag.id]}
+    build_tags_for_new_post
 
 
     respond_to do |format|
@@ -42,8 +41,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+
     @post = Post.find(params[:id])
-    @tags = Tag.all
+    @tags = Tag.select("name,id")
     @tag_options = @tags.collect {|tag| [tag.name, tag.id]}
   end
 
@@ -55,7 +55,6 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    binding.pry
     @user = current_user
     params[:post][:name] = @user.email
     
@@ -83,6 +82,7 @@ class PostsController < ApplicationController
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
+        build_tags_for_new_post
         format.html { render "new" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
@@ -96,6 +96,7 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
+    binding.pry
     @post = Post.find(params[:id])
 
     respond_to do |format|
@@ -121,6 +122,13 @@ class PostsController < ApplicationController
       format.json { head :no_content }
       format.js
     end
+  end
+
+  private 
+
+  def build_tags_for_new_post
+    @tags = Tag.select("name,id")
+    @tag_options = @tags.collect {|tag| [tag.name, tag.id]}
   end
 end
 

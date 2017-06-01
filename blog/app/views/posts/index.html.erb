@@ -1,7 +1,7 @@
 <%#= content_for :head do %>
 	<!-- <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css"> -->
 <%# end %>
-<%= stylesheet_link_tag "posts.scss" %>
+
 <style>
 .navbar-brand>img {
     left: 0px;
@@ -9,11 +9,16 @@
 </style>
 
 <div class = "container-fluid" style="overflow: hidden;">
+	<%#= binding.pry %>
 	<% @posts.each do |post| %>
 		<div class="col-md-3" id = "post_<%=post.id%>">
 			<%= render post %>
 		</div>
 	<% end %>
+</div>
+
+<div class= "text-center" style="margin-top: 80px;">
+	<%= will_paginate @posts %> 
 </div>
 
 

@@ -1,0 +1,10 @@
+ <div style="margin-left: 70px;">
+ 		<!-- <img src="/assets/search_page_icon.png" height="100" width="100"> -->
+ 	
+ 	<div style="margin-top: 80px; ">
+ 		<%= form_tag search_path, id: :search_form do %>
+			<%= text_field_tag :query,nil,placeholder:"Search",:class => "form-control col-md-8"%>
+			<%= submit_tag "Search" ,id: "search_button" , class: "btn btn-raised btn-primary"%>
+		<% end %>
+ 	</div>
+ </div>

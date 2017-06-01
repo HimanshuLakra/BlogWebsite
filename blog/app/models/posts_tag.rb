@@ -6,6 +6,9 @@ class PostsTag < ActiveRecord::Base
  belongs_to :post
  belongs_to :tag
 
+ validates :post , presence: true
+ validates :tag , presence: true
+
  # accepts_nested_attributes_for :tag,
  #                                :reject_if => :all_blank
  

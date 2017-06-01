@@ -19,6 +19,8 @@ class Post < ActiveRecord::Base
   							:minimum => 5
   						} 
   
+  validates :user ,:presence => true
+
   accepts_nested_attributes_for :picture ,:reject_if => :all_blank,
    :allow_destroy => true
 

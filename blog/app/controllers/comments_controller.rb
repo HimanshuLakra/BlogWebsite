@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_filter :check_if_user_can_comment, only: [:create]
+  before_filter :authenticate_user!, only: [:create,:destroy]
 
   def index
   end
@@ -29,6 +29,16 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def new_reply
+    @comment = Comment.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def create_reply
   end
 
   private

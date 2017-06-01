@@ -1,6 +1,19 @@
-<%= content_for :head do%>
-  <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
-<% end %>
+
+  <style>
+  .caret {
+    border-color: transparent !important;
+  }
+  .open>.dropdown-menu {
+    opacity: 1;
+    position: absolute;
+    left: 0;
+    width: auto;
+    padding-left: 8px;
+  }
+
+  </style>
+
+
 
 <div style="margin-left: 100px; margin-right: 100px;">
   <%= form_for @post,html: { :multipart => true } do |f| %>
@@ -23,7 +36,8 @@
 
     <div class="form-group">
       <%= f.label :content %><br />
-      <%= f.text_area :content , cols: "120",rows: "10",placeholder: "Whats in your mind"%>
+      <%= f.text_area :content , :class => "tinymce",cols: "120",rows: "10",placeholder: "Whats in your mind"%>
+      <%= tinymce %>
     </div>
 
     <div class="form-group">
@@ -33,8 +47,7 @@
     </div>
 
     <div class="form-group" style="margin-top: 30px;">
-        <%= f.label "Choose Tags(Multiple)" %>
-        <%= f.select :tag_ids, @tag_options, { include_blank: false },{ :class => "form-control",style: "overflow-y: scroll;",:multiple => true}%>
+        <%= f.select :tag_ids, @tag_options, { include_blank: false },{:multiple => true} %>
     </div>
 
     <div class="actions" style="margin-top: 20px;">
@@ -43,3 +56,9 @@
 
   <% end %>
 </div>
+<script type="text/javascript">
+  $("#post_tag_ids").multiselect({
+    nonSelectedText: "Choose Tags",
+    enableClickableOptGroups: true
+  });
+</script>
