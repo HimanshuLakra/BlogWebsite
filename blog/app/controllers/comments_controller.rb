@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_filter :authenticate_user!, only: [:create,:destroy]
+  before_filter :authenticate_user!, only: [:create,:destroy,:destroy_reply,:create_reply,:new_reply]
 
   def index
   end
@@ -7,7 +7,6 @@ class CommentsController < ApplicationController
   def create
     
   	@post = Post.find(params[:post_id])
-
     @hash_comment = params[:comment]
     @hash_comment[:user_id] = current_user.id
   	@comment = @post.comments.create(@hash_comment)  	
@@ -31,14 +30,39 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy_reply
+    @reply = Comment.find(params[:reply_id])
+    @reply.destroy
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def new_reply
-    @comment = Comment.find(params[:id])
+
+    @parent_comment = Comment.find(params[:comment_id])
+    @reply = @parent_comment.replies.build
     respond_to do |format|
       format.js
     end
   end
 
   def create_reply
+
+    @parent_comment  = Comment.find(params[:parent_comment_id])
+    params[:reply][:user_id] = current_user.id
+    @reply = @parent_comment.replies.create(params[:reply])
+  
+    if @reply.save
+      respond_to do |format|
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html
+      end
+    end
+
   end
 
   private

@@ -1,0 +1,10 @@
+<%= form_for :reply,url: comments_create_reply_path(parent_comment_id: @parent_comment),remote: true do |f| %>
+	<div style="overflow: hidden;">
+		<div class = "body" style="float: left;">
+			<%= f.text_area :body,cols: "50",rows: "1",placeholder: "Reply.."%>
+		</div>
+		<div class = "button" style=" float: left; margin-left: 16px;">
+			<%= f.submit "Submit",class: "btn btn-primary"%>
+		</div>
+	</div>
+<%end %>

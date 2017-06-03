@@ -10,27 +10,26 @@
 	  <%= @post.name.split("@")[0] %>
 	</div>  
 
-	<% if @post.picture.present? %>
-		<div style="margin-left: 150px; margin-top: 50px;">
-			<%= image_tag @post.picture.image.url, height: 250,width: 700 %>
-		</div>
-	<%end  %>
-	
-
 	<div style ="font-size : 18px ; overflow: hidden; margin-top: 10px;">
-	  <%@post.tags.each do |tag|%>
+	  <% @post_tags.each do |tag|%>
 	  	<div class= "label label-success" style="line-height: 2;float: left; margin-left: 5px;"><%= "##{tag.name}" %></div>
 	  <% end %>
 	</div>
 
-	<p style ="font-size : 20px ;margin-top: 30px; ">
+	<% if @post_image.present? %>
+		<div style="margin-left: 150px; margin-top: 50px;">
+			<%= image_tag @post_image.image.url, height: 250,width: 700 %>
+		</div>
+	<%end  %>
+	
+	<p style ="font-size : 18px ;margin-top: 30px; ">
 	  <%= @post.content.html_safe%>
 	</p>
 
  	<div id="divider" style =" margin-right: 50px;"></div>
 	
 
-	<div style=" margin-top: 30px;">
+	<div id= "comment_form" style=" margin-top: 30px;">
 		<h4>Add Comment</h4>
 			<%= form_for([@post,@new_comment],remote: true)  do |f| %>
 				<div class = "body">
@@ -38,6 +37,10 @@
 				</div>
 				<div class = "button" style="margin-top: 20px;">
 					<%= f.submit "Submit",class: "btn btn-raised btn-primary"%>
+					<% if !user_signed_in? %>
+						<div>Please login to comment
+						 <%= link_to "Login", new_user_session_path %></div>
+					<% end %>
 				</div>
 			<%end %>
 	</div>
@@ -54,3 +57,13 @@
 	</div>
 
 </div>
+
+<script type="text/javascript">
+	var user_signed = <%=user_signed_in? %>;
+
+	$('#comment_form :input').prop('disabled', true);
+
+	if(user_signed){
+		$('#comment_form :input').prop('disabled', false);
+	}
+</script>

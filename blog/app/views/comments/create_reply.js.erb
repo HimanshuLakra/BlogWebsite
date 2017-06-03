@@ -1,0 +1,3 @@
+$("#reply_<%= @parent_comment.id %>").show();
+$("#reply_form_container_<%= @parent_comment.id %>").hide();
+$("#replies_container_<%= @parent_comment.id%>").append("<%= escape_javascript(render template: "/comments/_comment_reply",locals: {reply: @reply}) %>")

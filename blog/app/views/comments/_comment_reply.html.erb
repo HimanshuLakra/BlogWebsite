@@ -1,37 +1,39 @@
-<!-- new_record check record for object exist or not  -->
-<% if !comment.new_record? %>
-	<div id = "comment_<%= comment.id %>" class="panel panel-default" >
-	<div id = "parent_div" style="overflow: hidden;" class="panel-body">
-		<div style="float: left;">
-			<% if comment.user.picture.present? %>
-				<div>
-					<%= image_tag comment.user.picture.image.url, height: 50,width: 50 %>
-				</div>
+<div id = "reply_<%= reply.id %>"  class="child-comment-container">
+	
+	<div class="child-comment-highlight"></div>
+
+	<div class="comment-box">
+
+		<div id="reply_user_image" style="float: left;">
+			<% if reply.user.picture.present? %>
+					<%= image_tag reply.user.picture.image.url, height: 25,width: 25 %>
 			<% end %>
 		</div>
-		<div id = "content_div" style="float:left;margin-left: 30px;">
+
+		<div id = "content_div" style="float:left; margin-left: 16px;">
+			
 			<div style="overflow: hidden;">
+			
 				<div style="float: left;">
-				  <strong><%= "#{comment.user.email.split("@")[0].capitalize }" %></strong>
+				  <strong><%= "#{reply.user.email.split("@")[0].capitalize }" %></strong>
 				</div>
-				<div style="float: left; margin-left: 20px;"> 
-					<% if user_signed_in? and current_user.id == comment.user_id %>
-				  		<%= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
-				 			<button type="submit" class="btn btn-raised btn-info">Destroy</button>
+
+				<div class="comment-time">
+					<%= calculate_time_from_created_at reply.created_at %>
+				</div>
+
+				<div class="child-comment-delete"> 
+					<% if user_signed_in? and current_user.id == reply.user_id %>
+				  		<%= form_for(reply,url: comments_destroy_reply_path(reply_id: reply.id), html: {method: :delete},remote: true) do |f| %>
+				 			<%= f.submit "Destroy", type: :image, src: "/assets/ic_delete.png",width: 30,height: 30 %>
 				 		<% end %>
 				  	<% end %>
 				</div>
 			</div>
-			<div>
-				<%= comment.body %>
-			</div>
-			<div id="seperator" class="divider"></div>
-			<div class= "text-center" style="overflow: hidden;">
-				<div style="float: left; font-size: 12px;"><%=  DateTime.parse(comment.created_at.to_s).strftime("%m/%d/%Y") %> </div>
-			</div>
+
+			<div> <%= reply.body %> </div>
 		</div>
 	</div>
-		<br>
-	</div>
-<% end %>
+</div>
+<br>
 

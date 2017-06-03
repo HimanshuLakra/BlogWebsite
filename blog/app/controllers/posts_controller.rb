@@ -16,9 +16,15 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.find(params[:id])
+    @post = Post.includes([:tags, :comments => 
+            [:user => :picture, :replies => [:user => :picture]]])
+            .where("posts.id = #{params[:id]}").first
+            
     @comments =  @post.comments
+    @post_image = @post.picture
+    @post_tags = @post.tags
     @new_comment = @post.comments.build
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @post }
@@ -96,7 +102,7 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
-    binding.pry
+    
     @post = Post.find(params[:id])
 
     respond_to do |format|

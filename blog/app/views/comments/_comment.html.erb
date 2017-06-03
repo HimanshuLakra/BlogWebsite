@@ -1,62 +1,56 @@
-<!-- new_record check record for object exist or not  -->
 <% if !comment.new_record? %>
-	<div id = "comment_<%= comment.id %>" class="panel panel-default" >
-	<div id = "parent_div" style="overflow: hidden;" class="panel-body">
-		<div style="float: left;">
-			<% if comment.user.picture.present? %>
-				<div>
-					<%= image_tag comment.user.picture.image.url, height: 50,width: 50 %>
-				</div>
-			<% end %>
-		</div>
-		<div id = "content_div" style="float:left;margin-left: 30px;">
-			<div style="overflow: hidden;">
-				<div style="float: left;">
-				  <strong><%= "#{comment.user.email.split("@")[0].capitalize }" %></strong>
-				</div>
-				<div style="float: left; margin-left: 20px;"> 
-					<% if user_signed_in? and current_user.id == comment.user_id %>
-				  		<%= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
-				 			<button type="submit" class="btn btn-raised btn-info">Destroy</button>
-				 		<% end %>
-				  	<% end %>
-				</div>
+
+	<div id = "comment_<%= comment.id %>" class="parent-comment-container" >
+
+		<div class="parent-comment-highlight"></div>
+
+		<div class="comment-box">
+			
+			<div style="float: left;">
+				<% if comment.user.picture.present? %>
+						<%= image_tag comment.user.picture.image.url, height: 30,width: 30 %>
+				<% end %>
 			</div>
-			<div>
-				<%= comment.body %>
-			</div>
-			<div id="seperator" class="divider"></div>
-			<div class= "text-center" style="overflow: hidden;">
-				<div style="float: left; font-size: 12px;"><%=  DateTime.parse(comment.created_at.to_s).strftime("%m/%d/%Y") %> </div>
-				<div style="float: left; margin-left: 10px;">
-				 <%= link_to "Reply",new_comment_reply_path %>
+
+			<div id = "content_div" style="float:left;margin-left: 16px;">
+				
+				<div id="name_div" style="overflow: hidden;">
+					
+					<div style="float: left;">
+					  <strong><%= "#{comment.user.email.split("@")[0].capitalize }" %></strong>
+					</div>
+					
+					<div class="comment-time">
+					  <%= calculate_time_from_created_at comment.created_at %>
+					</div>
+
+					<div style="float: left; margin-left: 25px;height:25px;overflow: hidden;"> 
+					    <% if user_signed_in? and current_user.id == comment.user_id %>
+						    <div id = "reply_<%=comment.id%>" style="float: left;">
+							 <%= link_to image_tag("/assets/ic_comment_reply.png",height:30,width:30),comments_new_reply_path(comment_id: comment.id),remote: true %>
+							</div>
+							
+							<div style="float: left;">
+								<%= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
+						  			<%= f.submit "Destroy", type: :image, src: "/assets/ic_delete.png",width: 30,height: 30 %>
+						  	    <% end %>
+						  	</div>
+					  	<% end %>
+					</div>
+				</div>
+
+				<div style="margin-bottom: 8px; font-size:15px;"> <%= comment.body %> </div>
+
+				<div id= "reply_form_container_<%= comment.id %>"></div>
+
+				<div id = "replies_container_<%= comment.id %>">
+					<% comment.replies.each do |reply|%>
+						<%= render template: "/comments/_comment_reply", locals: {reply: reply} %>
+					<% end %>
 				</div>
 			</div>
 		</div>
 	</div>
-		<br>
-		<!-- <div class = "panel panel-default">
-			<div class="panel-body">
-				<div>
-					<%#= comment.body %>
-				</div>
-
-				<div>
-					<%#= "by #{comment.user.email.split("@")[0] }" %>
-				</div>
-
-				<div style="font-size: 12px;">
-					<%#=  DateTime.parse(comment.created_at.to_s).strftime("%m/%d/%Y") %>
-				</div>
-				<p>
-				 	<%#if user_signed_in? and current_user.id == comment.user_id %>
-				  		<%#= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
-				 			<button type="submit" class="btn btn-raised btn-info">Destroy</button>
-				 		<%# end %>
-				  	<%# end %>
-				</p>
-			</div>
-		</div> -->
-	</div>
+	<br>
 <% end %>
 

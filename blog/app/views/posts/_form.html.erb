@@ -10,6 +10,9 @@
     width: auto;
     padding-left: 8px;
   }
+  .multiselect.dropdown-toggle.btn.btn-default {
+    border-style: hidden;
+  }
 
   </style>
 
@@ -46,7 +49,7 @@
       <% end %>
     </div>
 
-    <div class="form-group" style="margin-top: 30px;">
+    <div class="form-group" style="margin-top: 30px; border: 2px;">
         <%= f.select :tag_ids, @tag_options, { include_blank: false },{:multiple => true} %>
     </div>
 

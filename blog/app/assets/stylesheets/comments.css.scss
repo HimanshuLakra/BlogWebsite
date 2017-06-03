@@ -1,3 +1,53 @@
 // Place all the styles related to the Comments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.child-comment-container{
+	position: relative;
+	overflow: hidden;
+	width: 570px;
+}
+
+.parent-comment-container{
+    position: relative;
+	overflow: hidden;
+	width: 650px;
+}
+
+.comment-box{
+	border: 1px;
+	border-color:#eeeeee;
+	border-style:solid;
+	overflow: hidden; 
+	padding: 8px;
+	padding-left: 16px;
+}
+
+.child-comment-highlight {
+	float: left;
+	width: 5px; 
+	height:100%;
+	position:absolute;
+	background: #009688;
+}
+
+.parent-comment-highlight {
+	float: left;
+	width: 5px; 
+	height:100%;
+	position:absolute;
+	background: #FFAB00;
+}
+
+.comment-time{
+	float: left;
+	font-size: 12px;
+	margin-left: 8px;
+	margin-top: 4px;
+}
+
+.child-comment-delete{
+	float: left; 
+	margin-left: 
+	20px;height:20px;
+}

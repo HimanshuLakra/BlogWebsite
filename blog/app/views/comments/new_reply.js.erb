@@ -1,0 +1,2 @@
+$("#reply_form_container_<%= @parent_comment.id%>").append("<%= escape_javascript(render template: "/comments/_form_reply") %>");
+$("#reply_<%= @parent_comment.id %>").hide();

@@ -26,7 +26,8 @@ Blog::Application.routes.draw do
   post 'upload_profile_pic',to: "users#upload_user_image"
 
   get "comments/new_reply"
-
+  post "comments/create_reply"
+  delete "comments/destroy_reply"
 
 
   # The priority is based upon order of creation:
