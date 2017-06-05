@@ -1,20 +1,30 @@
 
 <div style = "margin-left: 100px; margin-right: 80px;" >
 
-	<div class = "title" style = " margin-top: 30px; font-size: 30px;">
+	<div class = "title" style = " margin-top: 30px; font-size: 30px; line-height: 110%">
 	  <strong><%= @post.title %></strong>
 	</div>
 
-	<div id ="author" style = " font-size: 18px;">
-	  <b>by:</b>
-	  <%= @post.name.split("@")[0] %>
-	</div>  
+	<div style="overflow: hidden;  margin-top: 16px; ">
+	  
+	  <div id ="author" style="overflow: hidden; float: left;">
+	  	  <div style="float: left;">
+		   <%= image_tag(@post_user_picture.image.url, height: 40,width: 40,style: "border-radius:50%") %>
+		  </div>
+		  <div style="float: left; margin-left: 8px;">
+			  <div class="author"> <%= @post.name.split("@")[0].capitalize %> </div>
+			  <div style="font-size: 11px; color: #757575"><%= calculate_time_from_created_at @post.created_at %></div> 
+		  </div>
+	  </div>
 
-	<div style ="font-size : 18px ; overflow: hidden; margin-top: 10px;">
-	  <% @post_tags.each do |tag|%>
-	  	<div class= "label label-success" style="line-height: 2;float: left; margin-left: 5px;"><%= "##{tag.name}" %></div>
-	  <% end %>
-	</div>
+	  <div class="tag-container">
+		  <% @post_tags.each do |tag|%>
+		  	<div class= "tag-border">
+		  	  <%=link_to "#{tag.name}",search_path(query: tag.name),method: :post,class: "link-decoration" %>
+		  	</div>
+		  <% end %>
+	  </div>
+	</div>  
 
 	<% if @post_image.present? %>
 		<div style="margin-left: 150px; margin-top: 50px;">

@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.includes([:tags, :comments => 
+    @post = Post.includes([:tags,:user=>:picture, :comments => 
             [:user => :picture, :replies => [:user => :picture]]])
             .where("posts.id = #{params[:id]}").first
             
@@ -24,6 +24,7 @@ class PostsController < ApplicationController
     @post_image = @post.picture
     @post_tags = @post.tags
     @new_comment = @post.comments.build
+    @post_user_picture = @post.user.picture
 
     respond_to do |format|
       format.html # show.html.erb
@@ -47,10 +48,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-
     @post = Post.find(params[:id])
-    @tags = Tag.select("name,id")
-    @tag_options = @tags.collect {|tag| [tag.name, tag.id]}
+    @picture_attributes = @post.picture
+    build_tags_for_new_post
   end
 
   def user_dashboard
@@ -61,25 +61,9 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
+
     @user = current_user
     params[:post][:name] = @user.email
-    
-    # @tag_params = params[:post][:posts_tags_attributes]["0"][:tag_id]
-    # posts_tags_attributes_hash = {}
-    # tags_hash = {}
-    # i=0
-
-    # @tag_params.each do |tag_id|
-      
-    #   if !tag_id.nil?
-    #     tag_id_hash = {}
-    #     tag_id_hash[:tag_id] = tag_id 
-    #     tags_hash[i.to_i] = tag_id_hash
-    #     i+=1
-    #   end
-    # end
-
-    # params[:post][:posts_tags_attributes] = tags_hash
 
     @post = @user.posts.create(params[:post])
 
@@ -110,6 +94,7 @@ class PostsController < ApplicationController
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
+        build_tags_for_new_post
         format.html { render action: "edit" }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end

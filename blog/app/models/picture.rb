@@ -8,5 +8,5 @@ class Picture < ActiveRecord::Base
 
   validates_attachment :image,
                         content_type: { content_type: ["image/jpeg" ,"image/png","image/gif"]},
-                        size: { in: 0..1000.kilobytes }
+                        size: { in: 0..5000.megabytes }
 end

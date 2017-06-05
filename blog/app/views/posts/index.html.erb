@@ -7,7 +7,6 @@
 </style>
 
 <div class = "container-fluid" style="overflow: hidden;">
-	<%#= binding.pry %>
 	<% @posts.each do |post| %>
 		<div class="col-md-3" id = "post_<%=post.id%>">
 			<%= render post %>

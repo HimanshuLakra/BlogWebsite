@@ -10,5 +10,33 @@
 	background: #EEEEEE;
 }
 
+.tag-container{
+	float:left;
+	font-size : 13px ;
+	overflow: hidden;
+	margin-left: 16px;
+	margin-top: 4px;
+}
 
+.tag-border{
+	border: 1.9px;
+	border-color:#AB47BC;
+	border-style:solid;
+	border-radius : 20px;
+	padding:3px;
+	padding-left:10px;
+	padding-right:10px;
+	float: left; 
+	margin-left: 5px;
+	background:#AB47BC;
+	line-height: 2;
+}
+.link-decoration {
+	color:#fff;
+	text-decoration:none;
+}
 
+.author {
+	 font-size: 16px; 
+	 color: #424242;
+}

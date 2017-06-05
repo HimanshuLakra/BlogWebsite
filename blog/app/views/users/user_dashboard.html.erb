@@ -6,12 +6,12 @@
 		<div style="margin-left: 40px;"> 
 	        <%= form_for :picture_attributes, :html => {:multipart => true}, :method => :post, url: upload_profile_pic_path do |f| %>
 
-	            <div style=" height: 150px; width: 150px; background: #B0BEC5; color: #455A64;">
-	               
+	            <div>
 	                <% if current_user.picture.present? %>
 	               		<%= image_tag(@current_user.picture.image.url,width: 200 , height: 200,class: "img-circle") %>
 	               	<% else  %>
-	               	  <div class = "text-center" style=" font-size: 50px; padding-top: 30px;">
+	               	  <div class = "text-center" style=" font-size: 50px; padding-top: 30px;
+	               	   height: 150px; width: 150px; background: #B0BEC5; color: #455A64;">
 	               	  	<%= current_user.email.at(0).capitalize %>
 	               	  </div>
 	                <% end %>
