@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   def create
     
   	@post = Post.find(params[:post_id])
-    @hash_comment = params[:comment]
+    @hash_comment = comment_params
     @hash_comment[:user_id] = current_user.id
   	@comment = @post.comments.create(@hash_comment)  	
     respond_to do |format|
@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
 
     @parent_comment  = Comment.find(params[:parent_comment_id])
     params[:reply][:user_id] = current_user.id
-    @reply = @parent_comment.replies.create(params[:reply])
+    @reply = @parent_comment.replies.create(reply_params)
   
     if @reply.save
       respond_to do |format|
@@ -67,10 +67,11 @@ class CommentsController < ApplicationController
 
   private
 
-  def check_if_user_can_comment
-    # if !user_signed_in?
-    #   request.format = 'html'
-    #   render 'devise/sessions/new', locals: {resource: User.new, resource_name: :user}
-    # end
+  def comment_params
+    params.require(:comment).permit(:body,:user_id,:post_id)
+  end
+
+  def reply_params
+    params.require(:reply).permit(:body,:user_id,:post_id)
   end
 end

@@ -6,7 +6,7 @@
 
 <div class="card" style="margin-top: 20px;">
 <div class ="card-block">
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name),validate: true) do |f| %>
   <div class="form-group">
    <%= f.label :email,class: "bmd-label-floating" %><br />
    <%= f.email_field :email,class: "form-control", autofocus: true %>

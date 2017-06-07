@@ -13,5 +13,6 @@ class User < ActiveRecord::Base
 
   has_one :picture , as: :imageable
   accepts_nested_attributes_for :picture , allow_destroy: :true,:reject_if => :all_blank 
+
   
 end

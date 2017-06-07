@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
-
-	attr_accessible :body,:post_id,:user_id
+ 
+ 	include ActiveModel::ForbiddenAttributesProtection
+ 	
 	belongs_to :post
 	belongs_to :user
 

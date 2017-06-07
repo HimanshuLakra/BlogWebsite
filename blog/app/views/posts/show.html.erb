@@ -41,7 +41,7 @@
 
 	<div id= "comment_form" style=" margin-top: 30px;">
 		<h4>Add Comment</h4>
-			<%= form_for([@post,@new_comment],remote: true)  do |f| %>
+			<%= form_for([@post,@new_comment],remote: true,validate: true)  do |f| %>
 				<div class = "body">
 					<%= f.text_area :body,cols: "70",rows: "3",placeholder: "Write your view"%>
 				</div>

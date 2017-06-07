@@ -16,3 +16,4 @@
 //= require bootstrap
 //= require bootstrap-multiselect
 //= require tinymce
+//= require rails.validations

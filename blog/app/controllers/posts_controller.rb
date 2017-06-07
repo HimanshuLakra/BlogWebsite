@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+
   # GET /posts
   # GET /posts.json
 
@@ -65,7 +66,7 @@ class PostsController < ApplicationController
     @user = current_user
     params[:post][:name] = @user.email
 
-    @post = @user.posts.create(params[:post])
+    @post = @user.posts.create(post_params)
 
     respond_to do |format|
       if @post.save
@@ -90,7 +91,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     respond_to do |format|
-      if @post.update_attributes(params[:post])
+      if @post.update_attributes(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -121,6 +122,11 @@ class PostsController < ApplicationController
     @tags = Tag.select("name,id")
     @tag_options = @tags.collect {|tag| [tag.name, tag.id]}
   end
+
+  def post_params
+    params.require(:post).permit(:content,:name,:title,{tag_ids: []},{picture_attributes: []})
+  end
+
 end
 
  # @user = current_user

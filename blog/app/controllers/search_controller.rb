@@ -8,13 +8,11 @@ class SearchController < ApplicationController
 	    @posts = []
 
 		unless params[:query].blank?
-		 @response = Tag.search params[:query]
-		 @response.records.map { |tag| 
-		 	tag.posts.each do |post|
-		 		@posts << post
-		 	end
+		 @response = Post.search params[:query]
+		 @response.records.map { |post| 
+		 	@posts << post
 		  }
-
+		  
 		 @unique_posts = @posts.uniq!
 		 @posts = @unique_posts if !@unique_posts.nil?
 		end

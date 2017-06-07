@@ -1,5 +1,5 @@
 
-<% if @posts.nil? %>
+<% if @posts.empty? %>
 	<div style="margin-left: 50px;">Sorry no results found for <%= @query %></div>
 <% else %>
 	<% @posts.each do |post|%>

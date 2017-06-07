@@ -13,13 +13,12 @@
   .multiselect.dropdown-toggle.btn.btn-default {
     border-style: hidden;
   }
-
   </style>
 
 
 
 <div style="margin-left: 100px; margin-right: 100px;">
-  <%= form_for @post,html: { :multipart => true } do |f| %>
+  <%= form_for @post,html: { :multipart => true },validate: true do |f| %>
     <% if @post.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -34,7 +33,7 @@
 
     <div class="form-group" style=" margin-top: 30px;">
       <%= f.label :title ,class: "bmd-label-floating"%><br />
-      <%= f.text_field :title,class: "form-control" %>
+      <%= f.text_field :title,class: "form-control"%>
     </div>
 
     <div class="form-group">
@@ -43,7 +42,7 @@
       <%= tinymce %>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style=" margin-top: 30px;">
       <%= f.fields_for :picture_attributes do |file|%>
         <%= file.file_field :image %>
       <% end %>
