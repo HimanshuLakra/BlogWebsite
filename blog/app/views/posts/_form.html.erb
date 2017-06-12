@@ -59,8 +59,11 @@
   <% end %>
 </div>
 <script type="text/javascript">
-  $("#post_tag_ids").multiselect({
-    nonSelectedText: "Choose Tags",
-    enableClickableOptGroups: true
+
+  $(document).ready(function(){
+     $("#post_tag_ids").multiselect({
+        nonSelectedText: "Choose Tags",
+        enableClickableOptGroups: true
+     });
   });
 </script>

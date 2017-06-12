@@ -62,23 +62,27 @@
 	</body>
 
 	<script type="text/javascript">
-		if($('#query').val() ==  "") {
-		  $('#search_button').attr('disabled', true);
-		  // $('#search_button').setAttribute("class","btn btn-default");
-		}
 
-		$('#query').keyup(function(){
-		  if($('#query').val() !=  "") {
-		       $('#search_button').attr('disabled', false);
-		       // $('#search_button').setAttribute("class","btn btn-raised btn-primary");
-		  }
+		$(document).ready(function(){
+			if($('#query').val() ==  "") {
+			  $('#search_button').attr('disabled', true);
+			  // $('#search_button').setAttribute("class","btn btn-default");
+			}
 
-		  else{
-		  	$('#search_button').attr('disabled', true); 
-		  	// $('#search_button').setAttribute("class","btn btn-default");
-		  }
-		      
+			$('#query').keyup(function(){
+			  if($('#query').val() !=  "") {
+			       $('#search_button').attr('disabled', false);
+			       // $('#search_button').setAttribute("class","btn btn-raised btn-primary");
+			  }
+
+			  else{
+			  	$('#search_button').attr('disabled', true); 
+			  	// $('#search_button').setAttribute("class","btn btn-default");
+			  }
+			      
+			});
 		});
+		
 	</script>
 
 </html>

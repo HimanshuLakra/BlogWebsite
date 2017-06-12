@@ -1,0 +1,5 @@
+<div id="email_content_container">
+	<div><%= "#{@post.title}" %></div>
+	<div>Comment: <%= truncate(@comment,length: 250).html_safe %></div>
+	<div><%= link_to "Go to Post", post_url(@post)%></div>
+</div>

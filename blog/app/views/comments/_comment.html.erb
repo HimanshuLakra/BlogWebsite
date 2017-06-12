@@ -25,11 +25,13 @@
 					</div>
 
 					<div style="float: left; margin-left: 25px;height:25px;overflow: hidden;"> 
-					    <% if user_signed_in? and current_user.id == comment.user_id %>
-						    <div id = "reply_<%=comment.id%>" style="float: left;">
-							 <%= link_to image_tag("/assets/ic_comment_reply.png",height:30,width:30),comments_new_reply_path(comment_id: comment.id),remote: true %>
+						<% if user_signed_in? %>
+							<div id = "reply_<%=comment.id%>" style="float: left;">
+									 <%= link_to image_tag("/assets/ic_comment_reply.png",height:30,width:30),comments_new_reply_path(comment_id: comment.id),remote: true %>
 							</div>
-							
+						<% end %>
+
+					    <% if user_signed_in? and current_user.id == comment.user_id %>
 							<div style="float: left;">
 								<%= form_for([comment.post, comment], html: {method: :delete},remote: true) do |f| %>
 						  			<%= f.submit "Destroy", type: :image, src: "/assets/ic_delete.png",width: 30,height: 30 %>

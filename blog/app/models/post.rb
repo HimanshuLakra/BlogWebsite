@@ -2,7 +2,6 @@ class Post < ActiveRecord::Base
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-  include ActiveModel::ForbiddenAttributesProtection
 
   has_many :posts_tags , dependent: :destroy
   has_many :tags, through: :posts_tags
@@ -57,7 +56,6 @@ class Post < ActiveRecord::Base
 
     indexes :tags do 
       indexes :name,type: 'string'
-      indexes :name,type: 'keyword'
     end
   end
 

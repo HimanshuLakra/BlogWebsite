@@ -1,13 +1,10 @@
 class UsersController < ApplicationController
 
- before_filter :authenticate_user! , only: [:user_dashboard,:upload_user_image] 
+ before_filter :authenticate_user!  
 
  def user_dashboard
-
-	if user_signed_in?
 	  @posts = current_user.posts
 	  @user = current_user
-	end
  end
 
  def upload_user_image
@@ -22,5 +19,4 @@ class UsersController < ApplicationController
     
     redirect_to dashboard_path
  end
- 
 end

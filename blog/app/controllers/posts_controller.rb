@@ -1,12 +1,13 @@
 class PostsController < ApplicationController
 
+  load_and_authorize_resource only: [:update,:destroy,:edit]
   # GET /posts
   # GET /posts.json
 
-  before_filter :authenticate_user!, only: [:new,:edit,:update,:create,:destroy,:user_dashboard]
+  before_filter :authenticate_user!,except: [:index,:show]
 
   def index
-    @posts = Post.paginate(:page => params[:page],:per_page => 8)
+    get_paginated_posts
     
     respond_to do |format|
       format.html # index.html.erb
@@ -19,8 +20,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.includes([:tags,:user=>:picture, :comments => 
             [:user => :picture, :replies => [:user => :picture]]])
-            .where("posts.id = #{params[:id]}").first
-            
+            .where("posts.id = ?", params[:id]).first
+          
     @comments =  @post.comments
     @post_image = @post.picture
     @post_tags = @post.tags
@@ -40,7 +41,6 @@ class PostsController < ApplicationController
     @posts_tags = @post.posts_tags.build
     build_tags_for_new_post
 
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -54,22 +54,16 @@ class PostsController < ApplicationController
     build_tags_for_new_post
   end
 
-  def user_dashboard
-    @posts = current_user.posts
-    @user = current_user
-  end
-
   # POST /posts
   # POST /posts.json
   def create
-
     @user = current_user
     params[:post][:name] = @user.email
-
     @post = @user.posts.create(post_params)
 
     respond_to do |format|
       if @post.save
+        PostMailer.post_created(@user,@post).deliver
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
@@ -92,6 +86,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(post_params)
+        PostMailer.post_updated(@post.user,@post).deliver
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -105,7 +100,6 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-
     @post = Post.find(params[:id])
     @post.destroy
 
@@ -127,20 +121,8 @@ class PostsController < ApplicationController
     params.require(:post).permit(:content,:name,:title,{tag_ids: []},{picture_attributes: []})
   end
 
+  def get_paginated_posts
+    @posts = Post.paginate(:page => params[:page],:per_page => 8)
+  end
 end
 
- # @user = current_user
- #    params[:post][:name] = @user.email
-    
- #    #add tag logic split tags with ','
- #    @tags = params[:post][:posts_tags_attributes]["0"][:tags].split(',')
- #    params[:post][:posts_tags_attributes] = {}
-    
- #    i = 0
- #    @tags.each do |tag|
- #      post_tag_hash = {}
- #      t = Tag.find_or_create_by_name(tag.downcase)  
- #      post_tag_hash[:tag_id] = t.id  
- #      params[:post][:posts_tags_attributes]["#{i}".to_i] = post_tag_hash
- #      i+=1
- #    end

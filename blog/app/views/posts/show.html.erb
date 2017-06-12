@@ -69,11 +69,16 @@
 </div>
 
 <script type="text/javascript">
-	var user_signed = <%=user_signed_in? %>;
 
-	$('#comment_form :input').prop('disabled', true);
+	$(document).ready(function(){
+		
+		var user_signed = <%=user_signed_in? %>;
 
-	if(user_signed){
-		$('#comment_form :input').prop('disabled', false);
-	}
+		$('#comment_form :input').prop('disabled', true);
+
+		if(user_signed){
+			$('#comment_form :input').prop('disabled', false);
+		}
+	});
+	
 </script>

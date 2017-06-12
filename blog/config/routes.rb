@@ -29,6 +29,9 @@ Blog::Application.routes.draw do
   post "comments/create_reply"
   delete "comments/destroy_reply"
 
+  get "files/new"
+  post "files/compute"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

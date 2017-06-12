@@ -1,6 +1,5 @@
 class PostsTag < ActiveRecord::Base
  
- include ActiveModel::ForbiddenAttributesProtection
  # attr_accessible :post_id, :tag_id
  # attr_accessible :tag_attributes
 

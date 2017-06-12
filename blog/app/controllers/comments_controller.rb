@@ -1,15 +1,20 @@
 class CommentsController < ApplicationController
-  before_filter :authenticate_user!, only: [:create,:destroy,:destroy_reply,:create_reply,:new_reply]
+
+  before_filter :authenticate_user!
 
   def index
   end
 
   def create
-    
   	@post = Post.find(params[:post_id])
-    @hash_comment = comment_params
-    @hash_comment[:user_id] = current_user.id
-  	@comment = @post.comments.create(@hash_comment)  	
+    params[:comment][:user_id] = current_user.id
+  	@comment = @post.comments.create(comment_params)
+    authorize! :create,@comment  
+
+    if @comment.save
+      PostMailer.comment_on_post(@post,current_user,@comment.body).deliver
+    end	
+
     respond_to do |format|
       format.js
     end
@@ -24,6 +29,7 @@ class CommentsController < ApplicationController
   def destroy
   	@post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
+    authorize! :destroy,@comment 
     @comment.destroy
     respond_to do |format|
       format.js
@@ -32,6 +38,7 @@ class CommentsController < ApplicationController
 
   def destroy_reply
     @reply = Comment.find(params[:reply_id])
+    authorize! :destroy,@comment 
     @reply.destroy
     respond_to do |format|
       format.js
@@ -50,10 +57,13 @@ class CommentsController < ApplicationController
   def create_reply
 
     @parent_comment  = Comment.find(params[:parent_comment_id])
-    params[:reply][:user_id] = current_user.id
-    @reply = @parent_comment.replies.create(reply_params)
+    params[:comment][:user_id] = current_user.id
+    @reply = @parent_comment.replies.create(comment_params)
+    authorize! :create,@reply 
   
     if @reply.save
+      PostMailer.reply_on_comment(@parent_comment.post,current_user,@reply.body).deliver
+    
       respond_to do |format|
         format.js
       end
@@ -71,7 +81,4 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body,:user_id,:post_id)
   end
 
-  def reply_params
-    params.require(:reply).permit(:body,:user_id,:post_id)
-  end
 end

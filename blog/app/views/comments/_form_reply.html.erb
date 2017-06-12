@@ -1,4 +1,4 @@
-<%= form_for :reply,url: comments_create_reply_path(parent_comment_id: @parent_comment),remote: true,validate: true do |f| %>
+<%= form_for @reply,url: comments_create_reply_path(parent_comment_id: @parent_comment),remote: true,validate: true do |f| %>
 	<div style="overflow: hidden;">
 		<div class = "body" style="float: left;">
 			<%= f.text_area :body,cols: "50",rows: "1",placeholder: "Reply.." %>
