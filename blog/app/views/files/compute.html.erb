@@ -1,8 +1,11 @@
 <div>
 	<div>computed</div>
 
-
 	<% @rows.each do |row| %>
-		<div><%= row %></div>
+		<div style="overflow: hidden;">
+			<div style="float: left;"><%= row[0]%></div>
+			<div style="float: left;"><%= row[1]%></div>
+			<div style="float: left;"><%= row[2]%></div>
+		</div>
 	<% end %>
 <div>

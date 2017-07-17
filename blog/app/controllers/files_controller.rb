@@ -30,19 +30,14 @@ class FilesController < ApplicationController
 			}
 
 			if index%5 == 0 
-				#begin
 					puts bulk_update_hash
 					result_array = Post.update(bulk_update_hash.keys,bulk_update_hash.values)
-          update_sheet_query_status result_array,bulk_update_hash,default_sheet,row_no_hash
+          update_sheet_query_status(bulk_update_hash, default_sheet, row_no_hash)
 					bulk_update_hash.clear
-				# rescue
-				# 	puts "something wrong happend ---------------------------------"
-				# end
 			end
 			puts "#{index} ---------index" 
 			@rows << row
 		end
-
 
 		x = xls_file.write "Final Result.xls"
 		puts x
@@ -50,18 +45,13 @@ class FilesController < ApplicationController
 
 	private
 
-	def update_sheet_query_status result_array,bulk_update_hash,default_sheet,row_no_hash
+	def update_sheet_query_status bulk_update_hash,default_sheet,row_no_hash
 		
-		#iterate records returned 
-		result_array.each do |post|
+		bulk_posts = Post.where(:id => bulk_update_hash.keys)
+		bulk_posts.each do |post|
 			trip_hash = bulk_update_hash[post.id]
 			trip_id_row_no = row_no_hash[post.id]
-
-      if trip_hash[:title] == post.title
-				default_sheet[trip_id_row_no,2] = "success"
-			else
-				default_sheet.set_value[trip_id_row_no,2]="not updated"
-			end
+			default_sheet[trip_id_row_no,2] = trip_hash[:title] == post.title ? "success" : "not updated"
 		end
 	end
 end

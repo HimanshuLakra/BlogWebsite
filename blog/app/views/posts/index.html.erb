@@ -8,9 +8,11 @@
 
 <div class = "container-fluid" style="overflow: hidden;">
 	<% @posts.each do |post| %>
-		<div class="col-md-3" id = "post_<%=post.id%>">
-			<%= render post %>
-		</div>
+		<% cache post do %>
+			<div class="col-md-3" id = "post_<%=post.id%>">
+				<%= render post %>
+			</div>
+		<% end %>
 	<% end %>
 </div>
 

@@ -34,7 +34,7 @@ class Post < ActiveRecord::Base
 
   #update elasticsearch index on new entry to db
   after_save { 
-    puts "after save called ---------------" 
+    puts "after save called ---------------#{self.id}" 
     ElasticSearchIndexWorker.perform_async(:index,  self.id) 
   }
 
@@ -101,5 +101,14 @@ class Post < ActiveRecord::Base
    posts.map do |post|
      { index: { _id: post.id, data: post.as_indexed_json } }
    end
+  end
+
+
+  def get_details
+    Post.includes([:tags,:user => :picture, :comments => 
+            [:user => :picture, :replies => [:user => :picture]]])
+            .where("posts.id = ?", self.id).first
+  
+    return self.comments, self.picture, self.tags, self.comments.build, self.user.picture
   end
 end

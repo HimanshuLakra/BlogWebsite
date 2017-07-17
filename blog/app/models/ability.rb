@@ -9,7 +9,7 @@ class Ability
       alias_action :create_reply, to: :create 
       alias_action :edit , to: :update
       alias_action :destroy_reply, to: :destroy
-      alias_action :user_dashboard, :index,:new_reply,:show,:new, to: :read
+      alias_action :user_dashboard, :index,:show, to: :read
 
       can [:create,:update,:destroy] , Post do |post| post.user_id == user.id end
       can [:create,:update,:destroy] , Comment do |comment| comment.user_id == user.id end
