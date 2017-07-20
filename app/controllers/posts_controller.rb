@@ -5,16 +5,16 @@ class PostsController < ApplicationController
   before_filter :load_post, only: [:edit, :destroy, :show, :update]
 
   def index
-    binding.pry
+
     get_paginated_posts
-    
+
     respond_to do |format|
       format.html # index.html.erb
     end
   end
 
   def show
-    @comments, @post_image, @post_tags, 
+    @comments, @post_image, @post_tags,
     @new_comment, @post_user_picture = @post.get_details
 
     respond_to do |format|
@@ -75,7 +75,7 @@ class PostsController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def build_tags_for_new_post
     @tags = Tag.select("name,id")
