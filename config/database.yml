@@ -20,7 +20,7 @@ development:
 
 
 production:
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
   reconnect: false
   database: new_blog_prod
@@ -28,4 +28,3 @@ production:
   username: root
   password: root
   host: localhost
-  socket: /var/run/mysqld/mysqld.sock
