@@ -32,6 +32,7 @@ gem 'redis-namespace', '1.5.2'
 gem 'hiredis', '0.6.0'
 gem 'client_side_validations','3.2.8'
 gem 'spreadsheet'
+gem 'dalli'
 #gem "roo", "~> 2.7.0"
 #gem 'roo-google'
 
@@ -39,7 +40,7 @@ gem 'bootstrap-sass', '~> 3.1.1.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+  gem 'sass-rails'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes

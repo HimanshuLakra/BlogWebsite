@@ -50,6 +50,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
+    dalli (2.7.6)
     devise (3.5.10)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -212,6 +213,7 @@ DEPENDENCIES
   cancan
   client_side_validations (= 3.2.8)
   coffee-rails (~> 3.2.1)
+  dalli
   devise
   elasticsearch (= 1.0.18)
   elasticsearch-api (= 1.0.18)
@@ -231,7 +233,7 @@ DEPENDENCIES
   redis-namespace (= 1.5.2)
   redis-rails (= 3.2.4)
   redis-store (= 1.1.7)
-  sass-rails (~> 3.2.3)
+  sass-rails
   sidekiq (~> 4.2.1)
   spreadsheet
   strong_parameters
