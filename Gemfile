@@ -32,6 +32,7 @@ gem 'redis-namespace', '1.5.2'
 gem 'hiredis', '0.6.0'
 gem 'client_side_validations','3.2.8'
 gem 'spreadsheet'
+gem 'test-unit'
 #gem 'dalli'
 #gem "roo", "~> 2.7.0"
 #gem 'roo-google'
